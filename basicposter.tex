@@ -23,7 +23,7 @@
 %%%Column1
 \section*{Binding variables}
 
-Variables are binded using the $let$ keyword.
+Variables are bound using the $let$ keyword.
 
 \begin{minted}[mathescape,
                numbersep=5pt,
@@ -32,7 +32,7 @@ Variables are binded using the $let$ keyword.
 let x = 10;
 \end{minted}
 
-The left size of the $let$ is a $pattern$ and allows us to find multiple values to multiple variables.
+The left size of the $let$ is a $pattern$ and allows us to bind multiple values to multiple variables.
 
 \begin{minted}[mathescape,
                numbersep=5pt,
@@ -41,7 +41,7 @@ The left size of the $let$ is a $pattern$ and allows us to find multiple values 
 let (x, y) = (10, 15);
 \end{minted}
 
-Rust does not require explicit type declarations if the type can be determined, but you can provide an explicit type if you wish.
+Rust does not require explicit type annotation if the type can be determined, but you can provide an explicit type if you wish.
 
 \begin{minted}[mathescape,
                numbersep=5pt,
@@ -65,8 +65,8 @@ let mut x = 10;
 \begin{tabular}{ c|c }
   Type & Details \\
   \hline
-    \color{BrickRed}i8 & \color{black}Signed 8 bit integer \\
-    \color{BrickRed}u8 & Unsigned 16-bit integer\\
+    \color{BrickRed}i8 & Signed 8 bit integer \\
+    \color{BrickRed}u8 & Unsigned 8-bit integer\\
     \color{BrickRed}i16 & Signed 16-bit integer\\
     \color{BrickRed}u16 & Unsigned 16-bit integer\\
     \color{BrickRed}i32 & Signed 32-bit integer \\
