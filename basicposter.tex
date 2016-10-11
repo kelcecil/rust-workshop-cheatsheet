@@ -1,43 +1,21 @@
-\documentclass[a0,final]{a0poster}
+\documentclass[letterpaper,landscape]{article}
 %%%Load packages
 \usepackage{multicol} 			%3-column layout
-\usepackage[left=2cm,right=2cm,bottom=0cm,top=0cm]{geometry}			%Reset margins
+\usepackage[margin=25pt]{geometry}			%Reset margins
 
 \usepackage{minted}
+\usepackage[usenames, dvipsnames]{color}
+
+\usepackage{array}
+\newcolumntype{L}{>{\centering\arraybackslash}m{6cm}}
 
 %%%Define lengths
-\setlength{\columnsep}{2cm}				%Set spacing between columns
+\setlength{\columnsep}{3cm}				%Set spacing between columns
 \setlength{\columnseprule}{1pt}			%Rule between columns
-
-%%%Format title
-\makeatletter							%Needed to include code in main file
-\renewcommand\@maketitle{%
-\null									%Sets position marker
-{
-\VERYHuge					%Set title font size
-\@title \par}%
-\vskip 0.6em%
-{
-\large						%Set author font size
-\lineskip .5em%
-\begin{tabular}[t]{l}%
-\@author
-\end{tabular}\par}%
-\vskip 1cm
-\par
-}
-\makeatother
 
 \title{Beginner's Rust Reference}
 
-\author{For Workshops}
-
 \begin{document}
-
-\begin{minipage}{\textwidth}					%Minipage for title contents
-\maketitle
-\end{minipage}
-\vspace{1cm}
 
 \begin{multicols}{3}							%Use 3-column layout
 \raggedcolumns							%Don't stretch contents vertically
@@ -84,69 +62,88 @@ let mut x = 10;
 \section*{Types}
 
 \subsection*{Numeric Types}
-\begin{tabular}{ c|c|c|c }
-  Type & Details & Name & Details \\
+\begin{tabular}{ c|c }
+  Type & Details \\
   \hline
-    i8 & Signed 8 bit integer & u8 & Unsigned 16-bit integer\\
-    i16 & Signed 16-bit integer & u16 & Unsigned 16-bit integer\\
-    i32 & Signed 32-bit integer & u32 & Unsigned 32-bit integer \\
-    i64 & Signed 64-bit integer & u64 & Unsighed 64-bit integer \\
+    \color{BrickRed}i8 & \color{black}Signed 8 bit integer \\
+    \color{BrickRed}u8 & Unsigned 16-bit integer\\
+    \color{BrickRed}i16 & Signed 16-bit integer\\
+    \color{BrickRed}u16 & Unsigned 16-bit integer\\
+    \color{BrickRed}i32 & Signed 32-bit integer \\
+    \color{BrickRed}u32 & Unsigned 32-bit integer \\
+    \color{BrickRed}i64 & Signed 64-bit integer \\
+    \color{BrickRed}u64 & Unsigned 64-bit integer \\
     \hline\hline
-    isize & Signed variable-size integer & usize & Unsigned variable-sized integer \\
+    \color{BrickRed}isize & Signed variable-size integer \\ \color{BrickRed}usize & Unsigned variable-sized integer \\
     \hline\hline
-    f32 & 32-bit floating point number  & f64 & 64-bit floating point number\\
+    \color{BrickRed}f32 & 32-bit floating point number \\
+    \color{BrickRed}f64 & 64-bit floating point number\\
 \end{tabular}
 
 \subsection*{String Types}
-\begin{tabular}{ c|c }
+\begin{tabular}{ c|L }
   Name & Notes \\
   \hline
-  \&str & Fixed-size string, Cannot be mutated. \\
-  String & Heap allocated string, Growable and mutatable.\\
-  char & Unicode scalar value. let letter = 'x';\\
+  \color{BrickRed}\&str & Fixed-size string, Cannot be mutated. \\
+  \color{BrickRed}String & Heap allocated string, Growable and mutatable.\\
+  \color{BrickRed}char & Unicode scalar value. let letter = 'x';\\
 \end{tabular}
 
 \subsection*{Other Types}
 \begin{tabular}{ c|c }
   Name & Notes \\
   \hline
-  bool & true or false \\
+  \color{BrickRed}bool & true or false \\
 \end{tabular}
 \\\\
 Find more details at: https://doc.rust-lang.org/book/primitive-types.html
 
 \section*{Tuples}
 
-
-
-\section*{Functions}
-
-Functions are defined using the $fn$ keyword. The following function named $euclidean_distance$ accepts two f64 arguments and returns an f64 result.
+A tuple is a fixed-size ordered list.
 
 \begin{minted}[mathescape,
                numbersep=5pt,
                frame=none,
                framesep=2mm]{rust}
-fn euclidean_distance(x: f64, y: f64) -> f64 {
+let product = ("Game", 59.99)
+\end{minted}
+
+You can explicitly set types for tuples. We'll explicitly set our tuple to contain a string slice ($\&str$) and a 64-bit floating point number ($f64$).
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+let product: (&str, f64) = ("Game", 59.99)
+\end{minted}
+
+Fields in a tuple can also be accessed using a $destructuring$ $let$.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+let (product_name, price) = product
+\end{minted}
+
+\section*{Functions}
+
+Functions are defined using the $fn$ keyword. The following function named $euclidean\_dist$ accepts two f64 arguments and returns an f64 result.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+fn euclidean_dist(x: f64, y: f64) -> f64 {
     let z = x.powi(2) + y.powi(2);
     z.sqrt()
 }
 \end{minted}
 
-Notice the last line does not end with a semi-colon. Lines are separated by semi-colins in Rust, but omitting the semi-colon from the last line of the function returns the result of the expression. The $return$ keyword should only be used when returning from the function early, and it's use on the function's last line is considered bad style.
+Notice the last line does not end with a semi-colon. Lines are separated by semi-colons in Rust, but omitting the semi-colon from the last line of the function returns the result of the expression. The $return$ keyword should only be used when returning from the function early, and it's use on the function's last line is considered bad style.
 
 Learn more at: https://doc.rust-lang.org/book/functions.html
-
-
-
-
-
-
-
-
-
-
-\columnbreak
 
 %%%Column 2
 \section*{Branching}
@@ -200,13 +197,10 @@ while !finished {
 
 \section*{Pattern Matching}
 
-
-\columnbreak
-
 %%%Column 3
 \section*{Unit tests}
 
-Unit tests are identified using a $\#[test]$ tag proceeding a function. The $assert!$ macro can be used to check conditions for test success or failure.
+Unit tests are identified using a $\#[test]$ attribu preceding a function. The $assert!$ macro can be used to check conditions for test success or failure.
 
 \begin{minted}[mathescape,
                numbersep=5pt,
@@ -218,6 +212,10 @@ fn addition_test() {
   assert!(result == 4)
 }
 \end{minted}
+
+\section*{References}
+
+The Rust Programming Book - https://doc.rust-lang.org/book/
 
 \end{multicols}
 \end{document}
