@@ -1,0 +1,223 @@
+\documentclass[a0,final]{a0poster}
+%%%Load packages
+\usepackage{multicol} 			%3-column layout
+\usepackage[left=2cm,right=2cm,bottom=0cm,top=0cm]{geometry}			%Reset margins
+
+\usepackage{minted}
+
+%%%Define lengths
+\setlength{\columnsep}{2cm}				%Set spacing between columns
+\setlength{\columnseprule}{1pt}			%Rule between columns
+
+%%%Format title
+\makeatletter							%Needed to include code in main file
+\renewcommand\@maketitle{%
+\null									%Sets position marker
+{
+\VERYHuge					%Set title font size
+\@title \par}%
+\vskip 0.6em%
+{
+\large						%Set author font size
+\lineskip .5em%
+\begin{tabular}[t]{l}%
+\@author
+\end{tabular}\par}%
+\vskip 1cm
+\par
+}
+\makeatother
+
+\title{Beginner's Rust Reference}
+
+\author{For Workshops}
+
+\begin{document}
+
+\begin{minipage}{\textwidth}					%Minipage for title contents
+\maketitle
+\end{minipage}
+\vspace{1cm}
+
+\begin{multicols}{3}							%Use 3-column layout
+\raggedcolumns							%Don't stretch contents vertically
+
+%%%Column1
+\section*{Binding variables}
+
+Variables are binded using the $let$ keyword.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+let x = 10;
+\end{minted}
+
+The left size of the $let$ is a $pattern$ and allows us to find multiple values to multiple variables.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+let (x, y) = (10, 15);
+\end{minted}
+
+Rust does not require explicit type declarations if the type can be determined, but you can provide an explicit type if you wish.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+let x: i32 = 10;
+\end{minted}
+
+Variable bindings are immutable by default but can be made mutable with the $mut$ keyword.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+let mut x = 10;
+\end{minted}
+
+\section*{Types}
+
+\subsection*{Numeric Types}
+\begin{tabular}{ c|c|c|c }
+  Type & Details & Name & Details \\
+  \hline
+    i8 & Signed 8 bit integer & u8 & Unsigned 16-bit integer\\
+    i16 & Signed 16-bit integer & u16 & Unsigned 16-bit integer\\
+    i32 & Signed 32-bit integer & u32 & Unsigned 32-bit integer \\
+    i64 & Signed 64-bit integer & u64 & Unsighed 64-bit integer \\
+    \hline\hline
+    isize & Signed variable-size integer & usize & Unsigned variable-sized integer \\
+    \hline\hline
+    f32 & 32-bit floating point number  & f64 & 64-bit floating point number\\
+\end{tabular}
+
+\subsection*{String Types}
+\begin{tabular}{ c|c }
+  Name & Notes \\
+  \hline
+  \&str & Fixed-size string, Cannot be mutated. \\
+  String & Heap allocated string, Growable and mutatable.\\
+  char & Unicode scalar value. let letter = 'x';\\
+\end{tabular}
+
+\subsection*{Other Types}
+\begin{tabular}{ c|c }
+  Name & Notes \\
+  \hline
+  bool & true or false \\
+\end{tabular}
+\\\\
+Find more details at: https://doc.rust-lang.org/book/primitive-types.html
+
+\section*{Tuples}
+
+
+
+\section*{Functions}
+
+Functions are defined using the $fn$ keyword. The following function named $euclidean_distance$ accepts two f64 arguments and returns an f64 result.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+fn euclidean_distance(x: f64, y: f64) -> f64 {
+    let z = x.powi(2) + y.powi(2);
+    z.sqrt()
+}
+\end{minted}
+
+Notice the last line does not end with a semi-colon. Lines are separated by semi-colins in Rust, but omitting the semi-colon from the last line of the function returns the result of the expression. The $return$ keyword should only be used when returning from the function early, and it's use on the function's last line is considered bad style.
+
+Learn more at: https://doc.rust-lang.org/book/functions.html
+
+
+
+
+
+
+
+
+
+
+\columnbreak
+
+%%%Column 2
+\section*{Branching}
+
+Branching can be done using the $if$, $else if$, and $else$ keywords.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+let age = 16;
+if age >= 16 {
+  println!("Buckle up!")
+} else if age == 15 {
+  println!("In-training!")
+} else {
+  println!("Someday...")
+}
+\end{minted}
+
+\section*{Looping}
+
+Infinite loops should use the $loop$ keyword. The $loop$ keyword is preferred over $while$ to help the compiler with optimization.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+loop {
+  println!("This will never stop!");
+}
+
+\end{minted}
+
+The $while$ loop repeats as long as the condition is true.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+let mut finished = false;
+let mut counter = 0;
+
+while !finished {
+    if counter % 5 == 0 {
+        finished = true;
+    }
+    counter++;
+}
+\end{minted}
+
+\section*{Pattern Matching}
+
+
+\columnbreak
+
+%%%Column 3
+\section*{Unit tests}
+
+Unit tests are identified using a $\#[test]$ tag proceeding a function. The $assert!$ macro can be used to check conditions for test success or failure.
+
+\begin{minted}[mathescape,
+               numbersep=5pt,
+               frame=none,
+               framesep=2mm]{rust}
+#[test]
+fn addition_test() {
+  let result = 2 + 2;
+  assert!(result == 4)
+}
+\end{minted}
+
+\end{multicols}
+\end{document}
